@@ -1,3 +1,12 @@
+/**
+  IT0425 Introducción a la inteligencia artifical
+  slide_bfs.go
+  Propósito: Resolver el cubo mágico usando el algoritmo BFS.
+
+  @autor Brando Pérez Pacheco
+  @version 1.0 03/09/14
+*/
+
 package main // invocando el paquete principal
 
 import (
@@ -216,9 +225,9 @@ func NewSlidePuzzleSolvr() *SlidePuzzleSolvr {
 	self.Width = 3
 	self.Height = 3
 	self.Mat = Matrix{
-		{1, 2, 3},
-		{4, 5, 6},
-		{7, 8, 0},
+		{5, 1, 6},
+		{4, 0, 7},
+		{8, 3, 2},
 	}
 	self.Gra = make(Graph)
 	self.Ids = append(self.Ids, self.SumMat(self.Mat))
@@ -316,21 +325,13 @@ func (self *SlidePuzzleSolvr) MoveSpaceGetChild(mat Matrix) {
 	y, x := self.GetPositionSpace(mat)
 	sum := []Pattern{}
 	id := self.SumMat(mat)
+	y_pos := Array{y - 1, y, y + 1, y}
+	x_pos := Array{x, x + 1, x, x - 1}
 
-	if y-1 > -1 {
-		sum = append(sum, self.GetChild(mat, y, x, y-1, x))
-	}
-
-	if x+1 < 3 {
-		sum = append(sum, self.GetChild(mat, y, x, y, x+1))
-	}
-
-	if y+1 < 3 {
-		sum = append(sum, self.GetChild(mat, y, x, y+1, x))
-	}
-
-	if x-1 > -1 {
-		sum = append(sum, self.GetChild(mat, y, x, y, x-1))
+	for i := 0; i < 4; i++ {
+		if y_pos[i] > -1 && y_pos[i] < 3 && x_pos[i] > -1 && x_pos[i] < 3 {
+			sum = append(sum, self.GetChild(mat, y, x, y_pos[i], x_pos[i]))
+		}
 	}
 
 	for _, val := range sum {
