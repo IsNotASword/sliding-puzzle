@@ -1,3 +1,12 @@
+/**
+  IT0425 Introducción a la inteligencia artifical
+  main.cpp
+  Propósito: Resolver el cubo mágico usando el algoritmo DFS.
+
+  @autor Brando Pérez Pacheco
+  @version 1.0 03/09/14
+*/
+
 package main // invocando el paquete principal
 
 import (
@@ -8,7 +17,6 @@ import (
 )
 
 type Matrix [][]int          // slice de slices
-type Parent map[int]int      // map
 type Graph map[int][]Pattern // map de slices de type Pattern
 type Array []int             // slice
 type IdMatrix map[int]Matrix // map of Matrix
@@ -217,11 +225,6 @@ func NewSlidePuzzleSolvr() *SlidePuzzleSolvr {
 
 	self.Width = 3
 	self.Height = 3
-	// self.Mat = Matrix{
-	// 	{0, 8, 5},
-	// 	{4, 2, 1},
-	// 	{7, 6, 3},
-	// }
 	self.Mat = Matrix{
 		{5, 1, 6},
 		{4, 0, 7},
@@ -324,21 +327,13 @@ func (self *SlidePuzzleSolvr) MoveSpaceGetChild(mat Matrix) {
 	y, x := self.GetPositionSpace(mat)
 	sum := []Pattern{}
 	id := self.SumMat(mat)
+	y_pos := Array{y - 1, y, y + 1, y}
+	x_pos := Array{x, x + 1, x, x - 1}
 
-	if y-1 > -1 {
-		sum = append(sum, self.GetChild(mat, y, x, y-1, x))
-	}
-
-	if x+1 < 3 {
-		sum = append(sum, self.GetChild(mat, y, x, y, x+1))
-	}
-
-	if y+1 < 3 {
-		sum = append(sum, self.GetChild(mat, y, x, y+1, x))
-	}
-
-	if x-1 > -1 {
-		sum = append(sum, self.GetChild(mat, y, x, y, x-1))
+	for i := 0; i < 4; i++ {
+		if y_pos[i] > -1 && y_pos[i] < 3 && x_pos[i] > -1 && x_pos[i] < 3 {
+			sum = append(sum, self.GetChild(mat, y, x, y_pos[i], x_pos[i]))
+		}
 	}
 
 	for _, val := range sum {
@@ -384,14 +379,9 @@ func (self *SlidePuzzleSolvr) Dfs(start, end int) {
   @return nada.
 */
 func (self *SlidePuzzleSolvr) PrintPath() {
-	counter := 0
-
 	for e := self.Path.queue.Front(); e != nil; e = e.Next() {
 		self.PrintMat(self.IdMat[e.Value.(int)])
-		counter++
 	}
-
-	fmt.Println("\n", counter)
 }
 
 // función principal
@@ -400,5 +390,5 @@ func main() {
 	slide_solvr := NewSlidePuzzleSolvr()
 
 	slide_solvr.Dfs(slide_solvr.Ids[0], slide_solvd.Sum)
-	slide_solvr.Path.PrintQueue()
+	slide_solvr.PrintPath()
 }
