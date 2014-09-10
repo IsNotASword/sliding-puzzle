@@ -58,6 +58,7 @@ func (self *Queue) Len() int {
 }
 
 func backtrace(parent Parent, start, end int) (path Queue) {
+	fmt.Println(parent)
 	path.queue.PushFront(end)
 
 	for e := path.queue.Front(); e.Value.(int) != start; e = path.queue.Front() {
