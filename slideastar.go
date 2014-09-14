@@ -43,6 +43,24 @@ type PuzzleSolver struct {
 	Graph
 }
 
+func main() {
+	start := Matrix{
+		{5, 1, 6},
+		{4, 0, 7},
+		{8, 3, 2},
+	}
+
+	end := Matrix{
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 0},
+	}
+
+	p := NewPuzzleSolver(start, end)
+
+	p.AStar()
+}
+
 /**
   Introduce un elemento al inicio del slice (arreglo).
 
@@ -394,22 +412,4 @@ func (self *PuzzleSolver) AStar() bool {
 	}
 
 	return false
-}
-
-func main() {
-	start := Matrix{
-		{5, 1, 6},
-		{4, 0, 7},
-		{8, 3, 2},
-	}
-
-	end := Matrix{
-		{1, 2, 3},
-		{4, 5, 6},
-		{7, 8, 0},
-	}
-
-	p := NewPuzzleSolver(start, end)
-
-	p.AStar()
 }

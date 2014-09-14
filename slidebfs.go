@@ -35,6 +35,25 @@ type PuzzleSolver struct {
 	Graph                   // grafo de ID's
 }
 
+// función principal
+func main() {
+	start := Matrix{
+		{5, 1, 6},
+		{4, 0, 7},
+		{8, 3, 2},
+	}
+
+	end := Matrix{
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 0},
+	}
+
+	p := NewPuzzleSolver(start, end)
+
+	p.Bfs()
+}
+
 /**
   Introduce un elemento al inicio del slice (arreglo).
 
@@ -289,23 +308,4 @@ func (self *PuzzleSolver) Bfs() bool {
 	}
 
 	return false
-}
-
-// función principal
-func main() {
-	start := Matrix{
-		{5, 1, 6},
-		{4, 0, 7},
-		{8, 3, 2},
-	}
-
-	end := Matrix{
-		{1, 2, 3},
-		{4, 5, 6},
-		{7, 8, 0},
-	}
-
-	p := NewPuzzleSolver(start, end)
-
-	p.Bfs()
 }

@@ -41,6 +41,25 @@ type PuzzleSolver struct {
 	Graph
 }
 
+// función principal
+func main() {
+	start := Matrix{
+		{5, 1, 6},
+		{4, 0, 7},
+		{8, 3, 2},
+	}
+
+	end := Matrix{
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 0},
+	}
+
+	p := NewPuzzleSolver(start, end)
+	p.Dfs(p.Start.Id, p.End.Id)
+	p.printPath()
+}
+
 /**
   Introduce un elemento al final del slice (arreglo).
 
@@ -273,23 +292,4 @@ func (self *PuzzleSolver) Dfs(start, end int) {
 			self.Dfs(v, end)
 		}
 	}
-}
-
-// función principal
-func main() {
-	start := Matrix{
-		{5, 1, 6},
-		{4, 0, 7},
-		{8, 3, 2},
-	}
-
-	end := Matrix{
-		{1, 2, 3},
-		{4, 5, 6},
-		{7, 8, 0},
-	}
-
-	p := NewPuzzleSolver(start, end)
-	p.Dfs(p.Start.Id, p.End.Id)
-	p.printPath()
 }
